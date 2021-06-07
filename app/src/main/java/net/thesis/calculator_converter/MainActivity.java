@@ -2,15 +2,11 @@ package net.thesis.calculator_converter;
 
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.util.JsonWriter;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.mariuszgromada.math.mxparser.*;
 
@@ -31,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private Spinner dropdownTo;
     private Button btnconvert;
     private Button backspaceButton;
+    private Button swapButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,6 +39,18 @@ public class MainActivity extends AppCompatActivity {
         dropdownFrom = findViewById(R.id.spFromCurrency);
         dropdownTo = findViewById(R.id.spToCurrency);
         btnconvert = findViewById(R.id.btnConvert);
+        swapButton = findViewById(R.id.swapBTN);
+
+        swapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int spinner1Index = dropdownFrom.getSelectedItemPosition();
+
+                dropdownFrom.setSelection(dropdownTo.getSelectedItemPosition());
+                dropdownTo.setSelection(spinner1Index );
+            }
+        });
+
 
         String[] currencyList = {"EUR", "USD", "GBP", "JPY", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, currencyList);
@@ -64,22 +72,116 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
 
-                        if(result_display.getText().toString().matches(regex) || result_display.getText().toString().matches(regex_int) || result_display.getText().toString().matches(regex_negative) || result_display.getText().toString().matches(regex_int_negative)) {
+                        if (result_display.getText().toString().matches(regex) || result_display.getText().toString().matches(regex_int) || result_display.getText().toString().matches(regex_negative) || result_display.getText().toString().matches(regex_int_negative)) {
                             JsonObject res = response.body();
                             JsonObject rates = res.getAsJsonObject("conversion_rates");
 
                             //access data
                             double currency = Double.valueOf(result_display.getText().toString());
                             double multiplier = Double.valueOf(rates.get(dropdownTo.getSelectedItem().toString()).toString());
+
+
+                            String currency_symbol = "";
+                            switch (dropdownTo.getSelectedItem().toString()) {
+                                case "EUR":
+                                    currency_symbol = "€";
+                                    break;
+                                case "USD":
+                                    currency_symbol = "$";
+                                    break;
+                                case "GBP":
+                                    currency_symbol = "£";
+                                    break;
+                                case "JPY":
+                                    currency_symbol = "¥";
+                                    break;
+                                case "AUD":
+                                    currency_symbol = "$AU";
+                                    break;
+                                case "CAD":
+                                    currency_symbol = "$CA";
+                                    break;
+                                case "CHF":
+                                    currency_symbol = "Fr";
+                                    break;
+                                case "CNY":
+                                    currency_symbol = "¥";
+                                    break;
+                                case "SEK":
+                                    currency_symbol = "kr";
+                                    break;
+                                case "NZD":
+                                    currency_symbol = "$NZ";
+                                    break;
+                            }
+
+
                             double result = currency * multiplier;
+
                             //print result
-                            result_display.setText((String.valueOf(result)));
-                            result_display.setSelection(String.valueOf(result).length());
-                        }
-                        else {
-                            Toast toast = Toast.makeText(getApplicationContext(),"Value should be a number", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER,0,0);
-                            toast.show();
+                            String converted_plus_symbol = String.format("%.2f",result) + currency_symbol;
+                            result_display.setText(converted_plus_symbol);
+                            result_display.setSelection(converted_plus_symbol.length());
+
+
+                        } else {
+
+                            //run equals to get result first
+                            equalsButton(view);
+
+
+                            JsonObject res = response.body();
+                            JsonObject rates = res.getAsJsonObject("conversion_rates");
+
+                            //access data
+                            double currency = Double.valueOf(result_display.getText().toString());
+                            double multiplier = Double.valueOf(rates.get(dropdownTo.getSelectedItem().toString()).toString());
+
+
+                            String currency_symbol = "";
+                            switch (dropdownTo.getSelectedItem().toString()) {
+                                case "EUR":
+                                    currency_symbol = "€";
+                                    break;
+                                case "USD":
+                                    currency_symbol = "$";
+                                    break;
+                                case "GBP":
+                                    currency_symbol = "£";
+                                    break;
+                                case "JPY":
+                                    currency_symbol = "¥";
+                                    break;
+                                case "AUD":
+                                    currency_symbol = "$AU";
+                                    break;
+                                case "CAD":
+                                    currency_symbol = "$CA";
+                                    break;
+                                case "CHF":
+                                    currency_symbol = "Fr";
+                                    break;
+                                case "CNY":
+                                    currency_symbol = "¥";
+                                    break;
+                                case "SEK":
+                                    currency_symbol = "kr";
+                                    break;
+                                case "NZD":
+                                    currency_symbol = "$NZ";
+                                    break;
+                            }
+
+
+                            double result = currency * multiplier;
+
+
+                            //print result
+
+                            String converted_plus_symbol = String.format("%.2f",result) + currency_symbol;
+                            result_display.setText(converted_plus_symbol);
+                            result_display.setSelection(converted_plus_symbol.length());
+
                         }
 
 
@@ -96,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         //converter_end
 
 
-
         //calc_start
 
         result_display = findViewById(R.id.result);
@@ -107,10 +208,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateText (String userInput){
+
+    private void updateText(String userInput) {
 
         //check for "not a number"
-        if (result_display.getText().toString().equals("NaN")){
+        if (result_display.getText().toString().equals("NaN")) {
             result_display.setText("");
         }
 
@@ -119,94 +221,101 @@ public class MainActivity extends AppCompatActivity {
         //get cursor position
         int cursorPosition = result_display.getSelectionStart();
 
-        String leftInput = prevInput.substring(0,cursorPosition);
+        String leftInput = prevInput.substring(0, cursorPosition);
         String rightInput = prevInput.substring(cursorPosition);
 
-        if(getString(R.string.display).equals(result_display.getText().toString())) {
+        if (getString(R.string.display).equals(result_display.getText().toString())) {
             result_display.setText(userInput);
-            result_display.setSelection(cursorPosition+1);
-        }
-        else {
-            result_display.setText(String.format("%s%s%s", leftInput, userInput, rightInput ));
-            result_display.setSelection(cursorPosition+1);
+            result_display.setSelection(cursorPosition + 1);
+        } else {
+            result_display.setText(String.format("%s%s%s", leftInput, userInput, rightInput));
+            result_display.setSelection(cursorPosition + 1);
         }
 
     }
 
-    public void equalsButton (View view) {
+    public void equalsButton(View view) {
         String userExpression = result_display.getText().toString();
 
         Expression expression = new Expression(userExpression);
 
         String result = String.valueOf(expression.calculate());
 
-        result_display.setText(result);
-        result_display.setSelection(result.length());
+        double result2 = expression.calculate();
+
+        if ((result2 % 1) == 0) {
+            result = String.format("%.0f", result2);
+            result_display.setText(result);
+            result_display.setSelection(result.length());
+        } else {
+            result = String.valueOf(result2);
+            result_display.setText(result);
+            result_display.setSelection(result.length());
+        }
     }
 
     public void backspaceButton(View view) {
         int cursorPosition = result_display.getSelectionStart();
         int textLength = result_display.getText().length();
 
-        if(cursorPosition !=0 && textLength!=0)
-        {
+        if (cursorPosition != 0 && textLength != 0) {
             SpannableStringBuilder spannableStringBuilder = (SpannableStringBuilder) result_display.getText();
-            spannableStringBuilder.replace(cursorPosition-1, cursorPosition, "");
+            spannableStringBuilder.replace(cursorPosition - 1, cursorPosition, "");
             result_display.setText(spannableStringBuilder);
-            result_display.setSelection(cursorPosition-1);
+            result_display.setSelection(cursorPosition - 1);
         }
     }
 
 
-
-    public void zeroButton (View view) {
+    public void zeroButton(View view) {
 
         //check for multiple zeros
-        if (result_display.getText().toString().equals("0")){
+        if (result_display.getText().toString().equals("0")) {
             return;
         }
         updateText("0");
 
     }
 
-    public void oneButton (View view) {
+    public void oneButton(View view) {
         updateText("1");
     }
 
-    public void twoButton (View view) {
+    public void twoButton(View view) {
         updateText("2");
     }
 
-    public void threeButton (View view) {
+    public void threeButton(View view) {
         updateText("3");
     }
 
-    public void fourButton (View view) {
+    public void fourButton(View view) {
         updateText("4");
     }
 
-    public void fiveButton (View view) {
+    public void fiveButton(View view) {
         updateText("5");
     }
 
-    public void sixButton (View view) {
+    public void sixButton(View view) {
         updateText("6");
     }
 
-    public void sevenButton (View view) {
+    public void sevenButton(View view) {
         updateText("7");
     }
 
-    public void eightButton (View view) {
+    public void eightButton(View view) {
         updateText("8");
     }
 
-    public void nineButton (View view) {
+    public void nineButton(View view) {
         updateText("9");
     }
 
-    public void decimal_pointButton (View view) {
-        updateText(".");
+    public void decimal_pointButton(View view) {
+
+       updateText(".");
     }
 
 
@@ -227,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signButton (View view) {
+
 
         if (result_display.getText().toString().startsWith("-")) {
             String sign_swap = result_display.getText().toString().replaceFirst("-","+");

@@ -31,8 +31,6 @@
 
     <string name="convert">Convert</string>
 
-
-
     <string-array name="currency_array">
         <item>GBP</item>
         <item>USD</item>

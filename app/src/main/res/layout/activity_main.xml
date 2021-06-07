@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/DarkGray"
-
-    android:orientation="vertical">
+    android:background="@color/DarkGray">
 
 
     <Button
@@ -39,6 +36,20 @@
         app:layout_constraintTop_toBottomOf="@+id/btnConvert"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/swapBTN"
+        android:layout_width="29dp"
+        android:layout_height="21dp"
+        android:foreground="@drawable/swap2"
+        app:icon="@drawable/swap"
+        android:background="@drawable/ripple_effect_2"
+        app:layout_constraintBottom_toTopOf="@+id/spFromCurrency"
+        app:layout_constraintEnd_toStartOf="@+id/textTo"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toEndOf="@+id/textFrom"
+        app:layout_constraintTop_toBottomOf="@+id/result"
+        app:layout_constraintVertical_bias="0.76" />
+
     <EditText
         android:id="@+id/result"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -61,20 +72,6 @@
         app:layout_constraintVertical_bias="0.75" />
 
     <Spinner
-        android:id="@+id/spFromCurrency"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="15dp"
-        android:popupBackground="@color/cardview_dark_background"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/spToCurrency"
-        app:layout_constraintTop_toBottomOf="@+id/textFrom"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Spinner
         android:id="@+id/spToCurrency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,6 +83,20 @@
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toStartOf="@+id/btnConvert"
         app:layout_constraintTop_toBottomOf="@+id/textTo"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Spinner
+        android:id="@+id/spFromCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="15dp"
+        android:popupBackground="@color/cardview_dark_background"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/spToCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/textFrom"
         app:layout_constraintVertical_bias="0.0" />
 
     <TableLayout
@@ -106,6 +117,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="clearButton"
                 android:text="@string/clear"
                 android:textColor="@color/white"
@@ -117,6 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="signButton"
                 android:text="@string/sign"
                 android:textColor="@color/white"
@@ -128,10 +141,11 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="exponentButton"
                 android:text="@string/exponent"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/divide"
@@ -139,6 +153,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="divideButton"
                 android:text="@string/divide"
                 android:textColor="@color/white"
@@ -155,6 +170,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="sevenButton"
                 android:text="@string/seven"
                 android:textColor="@color/white"
@@ -166,6 +182,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="eightButton"
                 android:text="@string/eight"
                 android:textColor="@color/white"
@@ -177,6 +194,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="nineButton"
                 android:text="@string/nine"
                 android:textColor="@color/white"
@@ -188,6 +206,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="multiplyButton"
                 android:text="@string/multiply"
                 android:textColor="@color/white"
@@ -204,6 +223,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="fourButton"
                 android:text="@string/four"
                 android:textColor="@color/white"
@@ -215,6 +235,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="fiveButton"
                 android:text="@string/five"
                 android:textColor="@color/white"
@@ -226,6 +247,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="sixButton"
                 android:text="@string/six"
                 android:textColor="@color/white"
@@ -237,6 +259,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="subtractButton"
                 android:text="@string/subtract"
                 android:textColor="@color/white"
@@ -253,6 +276,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="oneButton"
                 android:text="@string/one"
                 android:textColor="@color/white"
@@ -264,6 +288,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="twoButton"
                 android:text="@string/two"
                 android:textColor="@color/white"
@@ -275,6 +300,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="threeButton"
                 android:text="@string/three"
                 android:textColor="@color/white"
@@ -286,6 +312,7 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/action_buttons"
                 android:onClick="addButton"
                 android:text="@string/add"
                 android:textColor="@color/white"
@@ -298,24 +325,26 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/zero"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:onClick="zeroButton"
-                android:text="@string/zero"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <Button
                 android:id="@+id/decimal_point"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="1"
+                android:background="@drawable/number_buttons"
                 android:onClick="decimal_pointButton"
                 android:text="@string/decimal_point"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/zero"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@drawable/number_buttons"
+                android:onClick="zeroButton"
+                android:text="@string/zero"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -325,12 +354,25 @@
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_weight="2"
+                android:background="@drawable/equals_button"
                 android:onClick="equalsButton"
                 android:text="@string/equals"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </TableRow>
     </TableLayout>
+
+    <TextView
+        android:id="@+id/textTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/to_currency"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="@+id/spToCurrency"
+        app:layout_constraintTop_toBottomOf="@+id/result" />
 
     <TextView
         android:id="@+id/textFrom"
@@ -343,18 +385,6 @@
         app:layout_constraintEnd_toStartOf="@+id/textTo"
         app:layout_constraintHorizontal_bias="0.906"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result" />
-
-    <TextView
-        android:id="@+id/textTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/to_currency"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
-        app:layout_constraintStart_toStartOf="@+id/spToCurrency"
         app:layout_constraintTop_toBottomOf="@+id/result" />
 
 
