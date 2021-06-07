@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,17 +39,22 @@
 
     <Button
         android:id="@+id/swapBTN"
-        android:layout_width="29dp"
-        android:layout_height="21dp"
+        android:layout_width="36dp"
+        android:layout_height="28dp"
+
+
+        android:layout_marginStart="148dp"
+
+        android:layout_marginTop="56dp"
+        android:background="@drawable/action_buttons"
         android:foreground="@drawable/swap2"
         app:icon="@drawable/swap"
-        android:background="@drawable/ripple_effect_2"
-        app:layout_constraintBottom_toTopOf="@+id/spFromCurrency"
-        app:layout_constraintEnd_toStartOf="@+id/textTo"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toEndOf="@+id/textFrom"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toStartOf="@+id/spToCurrency"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toEndOf="@+id/spFromCurrency"
         app:layout_constraintTop_toBottomOf="@+id/result"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.244" />
 
     <EditText
         android:id="@+id/result"
@@ -76,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="40dp"
         android:padding="15dp"
         android:popupBackground="@color/cardview_dark_background"
         android:textColor="#FF0000"
@@ -90,14 +96,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:padding="15dp"
         android:popupBackground="@color/cardview_dark_background"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toStartOf="@+id/spToCurrency"
         app:layout_constraintTop_toBottomOf="@+id/textFrom"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.011"
+        tools:layout_editor_absoluteX="57dp" />
 
     <TableLayout
         android:id="@+id/tableLayout"

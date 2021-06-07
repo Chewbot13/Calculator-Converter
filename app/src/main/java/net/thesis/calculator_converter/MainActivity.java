@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //converter_start
+        // converter_start
 
         dropdownFrom = findViewById(R.id.spFromCurrency);
         dropdownTo = findViewById(R.id.spToCurrency);
@@ -76,111 +76,36 @@ public class MainActivity extends AppCompatActivity {
                             JsonObject res = response.body();
                             JsonObject rates = res.getAsJsonObject("conversion_rates");
 
-                            //access data
+                            // access data
                             double currency = Double.valueOf(result_display.getText().toString());
                             double multiplier = Double.valueOf(rates.get(dropdownTo.getSelectedItem().toString()).toString());
-
-
-                            String currency_symbol = "";
-                            switch (dropdownTo.getSelectedItem().toString()) {
-                                case "EUR":
-                                    currency_symbol = "€";
-                                    break;
-                                case "USD":
-                                    currency_symbol = "$";
-                                    break;
-                                case "GBP":
-                                    currency_symbol = "£";
-                                    break;
-                                case "JPY":
-                                    currency_symbol = "¥";
-                                    break;
-                                case "AUD":
-                                    currency_symbol = "$AU";
-                                    break;
-                                case "CAD":
-                                    currency_symbol = "$CA";
-                                    break;
-                                case "CHF":
-                                    currency_symbol = "Fr";
-                                    break;
-                                case "CNY":
-                                    currency_symbol = "¥";
-                                    break;
-                                case "SEK":
-                                    currency_symbol = "kr";
-                                    break;
-                                case "NZD":
-                                    currency_symbol = "$NZ";
-                                    break;
-                            }
-
-
                             double result = currency * multiplier;
 
-                            //print result
-                            String converted_plus_symbol = String.format("%.2f",result) + currency_symbol;
-                            result_display.setText(converted_plus_symbol);
-                            result_display.setSelection(converted_plus_symbol.length());
+
+                            // print result
+                            String result_formated = String.format("%.2f",result);
+                            result_display.setText((String.valueOf(result_formated)));
+                            result_display.setSelection(String.valueOf(result_formated).length());
 
 
                         } else {
 
-                            //run equals to get result first
+                            // run equals to get result first
                             equalsButton(view);
 
 
                             JsonObject res = response.body();
                             JsonObject rates = res.getAsJsonObject("conversion_rates");
 
-                            //access data
+                            // access data
                             double currency = Double.valueOf(result_display.getText().toString());
                             double multiplier = Double.valueOf(rates.get(dropdownTo.getSelectedItem().toString()).toString());
-
-
-                            String currency_symbol = "";
-                            switch (dropdownTo.getSelectedItem().toString()) {
-                                case "EUR":
-                                    currency_symbol = "€";
-                                    break;
-                                case "USD":
-                                    currency_symbol = "$";
-                                    break;
-                                case "GBP":
-                                    currency_symbol = "£";
-                                    break;
-                                case "JPY":
-                                    currency_symbol = "¥";
-                                    break;
-                                case "AUD":
-                                    currency_symbol = "$AU";
-                                    break;
-                                case "CAD":
-                                    currency_symbol = "$CA";
-                                    break;
-                                case "CHF":
-                                    currency_symbol = "Fr";
-                                    break;
-                                case "CNY":
-                                    currency_symbol = "¥";
-                                    break;
-                                case "SEK":
-                                    currency_symbol = "kr";
-                                    break;
-                                case "NZD":
-                                    currency_symbol = "$NZ";
-                                    break;
-                            }
-
-
                             double result = currency * multiplier;
 
-
-                            //print result
-
-                            String converted_plus_symbol = String.format("%.2f",result) + currency_symbol;
-                            result_display.setText(converted_plus_symbol);
-                            result_display.setSelection(converted_plus_symbol.length());
+                            // print result
+                            String result_formated = String.format("%.2f",result);
+                            result_display.setText((String.valueOf(result_formated)));
+                            result_display.setSelection(String.valueOf(result_formated).length());
 
                         }
 
@@ -195,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //converter_end
+        // converter_end
 
 
-        //calc_start
+        // calc_start
 
         result_display = findViewById(R.id.result);
 
-        //hide keyboard
+        // hide keyboard
         result_display.setShowSoftInputOnFocus(false);
 
 
@@ -211,14 +136,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateText(String userInput) {
 
-        //check for "not a number"
-        if (result_display.getText().toString().equals("NaN")) {
+        // check for "not a number"
+        if (result_display.getText().toString().startsWith("N")) {
             result_display.setText("");
         }
 
         String prevInput = result_display.getText().toString();
 
-        //get cursor position
+        // get cursor position
         int cursorPosition = result_display.getSelectionStart();
 
         String leftInput = prevInput.substring(0, cursorPosition);
@@ -269,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void zeroButton(View view) {
 
-        //check for multiple zeros
+        // check for multiple zeros
         if (result_display.getText().toString().equals("0")) {
             return;
         }
@@ -315,23 +240,89 @@ public class MainActivity extends AppCompatActivity {
 
     public void decimal_pointButton(View view) {
 
-       updateText(".");
+        // check for existing
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
+
+        if (result_display.getText().toString().equals("0")) {
+            result_display.setText("0.");
+            result_display.setSelection(result_display.getText().length());
+        }else  updateText(".");
     }
 
 
     public void addButton (View view) {
+
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
         updateText("+");
     }
 
     public void subtractButton (View view) {
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
         updateText("-");
     }
 
     public void multiplyButton (View view) {
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
         updateText("*");
     }
 
     public void divideButton (View view) {
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
         updateText("/");
     }
 
@@ -360,6 +351,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void exponentButton (View view) {
+        String check = result_display.getText().toString();
+
+        if (check.substring(check.length() - 1).equals("+")  ||
+                check.substring(check.length() - 1).equals("-") ||
+                check.substring(check.length() - 1).equals("*") ||
+                check.substring(check.length() - 1).equals("/") ||
+                check.substring(check.length() - 1).equals(".") ||
+                check.substring(check.length() - 1).equals("^")
+        )
+        {
+            return;
+        }
         updateText("^");
     }
 
@@ -367,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
         result_display.setText("0");
     }
 
-    //calc_end
+    // calc_end
 
 
 }
